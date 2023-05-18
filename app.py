@@ -23,15 +23,17 @@ with st.sidebar:
     )
     st.divider()
 
+if st.button("🔈 Generate Speech"):
+    try:
+        audio = generate(text=text, voice=voice, model='eleven_multilingual_v1',
+                         api_key=API_KEY if API_KEY else st.secrets['API_KEY'])
+        st.audio(data=audio)
+    except UnauthenticatedRateLimitError:
+        e = UnauthenticatedRateLimitError("Unauthenticated Rate Limit Error")
+        st.exception(e)
 
-try:
-    audio = generate(text=text, voice=voice, model='eleven_multilingual_v1',
-                     api_key=API_KEY if API_KEY else st.secrets['API_KEY'])
-    st.audio(data=audio)
-except UnauthenticatedRateLimitError:
-    e = UnauthenticatedRateLimitError("Unauthenticated Rate Limit Error")
-    st.exception(e)
-
-except RateLimitError:
-    e = RateLimitError('Rate Limit')
-    st.exception(e)
+    except RateLimitError:
+        e = RateLimitError('Rate Limit')
+        st.exception(e)
+else:
+    st.write('Input the text and click Generate')
