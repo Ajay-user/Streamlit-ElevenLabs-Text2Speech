@@ -17,7 +17,7 @@ with st.sidebar:
 
     value = "I am the machine." if english == 'English' else "बस बातें अपने जैसे करते है"
     text = st.text_area(label="Enter the text here",
-                        value=value, max_chars=50 if not API_KEY else None)
+                        value=value, max_chars=30 if not API_KEY else None)
     voice = st.selectbox(
         label="Choose the voice", options=[v.name for v in voices()]
     )
